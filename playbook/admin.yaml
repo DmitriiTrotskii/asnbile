@@ -1,24 +1,24 @@
 ---
- - name: Make new user for ansible
+ - name: Make ansible adminstrator user
    hosts: "{{ HOSTS }}"
    gather_facts: false
    become: yes
 
    vars:
-    user: "ansible"
     sudo_file: "../teamplate/"
     ssh_pub_key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
    
    pre_tasks:
-    - name: Add new sudoers user
+    - name: Config ansible user
       user:
        name: "{{ user }}"
        shell: /bin/bash
-       comment: Ansible Administrato
+       password_lock: yes
+       comment: Ansible Administrator
        group: sudo
 
    tasks:
-    - name: copy sudoers file
+    - name: Copy sudoers nopasswd file
       template:
        src: "{{ sudo_file }}sudo.nopasswd.j2"
        dest: "/etc/sudoers.d/{{ user }}"
@@ -26,7 +26,7 @@
        group: root
        mode: '0440'
 
-    - name: copy ssh-pub-key
+    - name: Add ssh public key
       authorized_key:
        user: "{{ user }}"
        state: present
