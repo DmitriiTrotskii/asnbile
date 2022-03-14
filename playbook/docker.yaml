@@ -1,0 +1,58 @@
+---
+ - name: Install docker
+   hosts: "{{ HOSTS }}"
+   gather_facts: false
+   become: yes
+
+   vars:
+    docker_url: "https://download.docker.com/linux/ubuntu"
+
+   pre_tasks:
+
+   - name: Docker old version remove
+     apt:
+      pkg:
+       - docker
+       - docker-engine
+       - docker.io
+       - containerd
+       - runc
+      state: absent
+
+   - name: Get packege facts
+     package_facts:
+      manager: "auto"
+
+   - name: Get system facts
+     setup:
+      filter:
+       - 'ansible_env'
+       - 'ansible_distribution_release'
+   
+   tasks:
+
+   - name: Docker gpg-key add
+     apt_key:
+      url: "{{ docker_url }}/gpg"
+      state: present
+
+   - name: Docker repository add
+     apt_repository:
+      repo: "deb {{ docker_url }} {{ ansible_distribution_release }} stable"
+      state: present
+
+   - name: Docker latest version install
+     apt:
+      pkg:
+       - docker-ce
+       - docker-ce-cli
+       - containerd.io
+      state: latest
+      update_cache: yes
+      cache_valid_time: 300
+   
+   - name: User add docker group
+     ansible.builtin.user:
+      name: "{{ ansible_env.SUDO_USER }}"
+      groups: docker
+      append: yes

@@ -1,0 +1,39 @@
+---
+ - name: Install YandexBroswer
+   hosts: "{{ HOSTS }}"
+   gather_facts: false
+   become: yes
+
+   vars:
+    url: "https://browser.yandex.ru/download?banerid=6301000000&os=linux&package=deb&x64=1&beta=1"
+
+   pre_tasks:
+    
+    - name: YandexBroswer check bin file
+      stat:
+       path: /usr/bin/yandex-browser
+      register: yandex
+    
+    - name: Update cache
+      apt:
+       update_cache: yes
+       cache_valid_time: 3600
+   
+   tasks:
+
+   - block:
+
+     - name: YandexBroswer dependences install
+       apt:
+        pkg:
+         - jq
+         - libjq1
+         - libonig5
+        state: latest
+
+     - name: YandexBroswer install from url
+       apt:
+        deb: "{{ url }}"
+     
+     when:
+      - "not yandex.stat.exists"

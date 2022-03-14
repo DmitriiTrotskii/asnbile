@@ -1,0 +1,33 @@
+---
+ - name: Make new user for ansible
+   hosts: "{{ HOSTS }}"
+   gather_facts: false
+   become: yes
+
+   vars:
+    user: "ansible"
+    sudo_file: "../teamplate/"
+    ssh_pub_key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
+   
+   pre_tasks:
+    - name: Add new sudoers user
+      user:
+       name: "{{ user }}"
+       shell: /bin/bash
+       comment: Ansible Administrato
+       group: sudo
+
+   tasks:
+    - name: copy sudoers file
+      template:
+       src: "{{ sudo_file }}sudo.nopasswd.j2"
+       dest: "/etc/sudoers.d/{{ user }}"
+       owner: root
+       group: root
+       mode: '0440'
+
+    - name: copy ssh-pub-key
+      authorized_key:
+       user: "{{ user }}"
+       state: present
+       key: "{{ ssh_pub_key }}"
