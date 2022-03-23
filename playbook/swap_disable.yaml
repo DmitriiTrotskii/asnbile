@@ -1,0 +1,16 @@
+---
+ - name: Disable SWAP
+   hosts: "{{ HOSTS }}"
+   gather_facts: true
+   become: yes
+
+   tasks:
+   - name: SWAP OFF
+     shell: swapoff -a
+     when: ansible_swaptotal_mb > 0
+
+   - name: fstab swap disable
+     replace:
+      path: '/etc/fstab'
+      regexp: '^\/swap\.img.*'
+      replace: '#\g<0>'
