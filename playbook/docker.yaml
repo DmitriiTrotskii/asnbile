@@ -1,7 +1,7 @@
 ---
  - name: Install docker
    hosts: "{{ HOSTS }}"
-   gather_facts: false
+   gather_facts: true
    become: yes
 
    vars:
@@ -19,16 +19,6 @@
        - runc
       state: absent
 
-   - name: Get packege facts
-     package_facts:
-      manager: "auto"
-
-   - name: Get system facts
-     setup:
-      filter:
-       - 'ansible_env'
-       - 'ansible_distribution_release'
-   
    tasks:
 
    - name: Docker gpg-key add
@@ -51,8 +41,8 @@
       update_cache: yes
       cache_valid_time: 300
    
-   - name: User add docker group
-     ansible.builtin.user:
-      name: "{{ ansible_env.SUDO_USER }}"
-      groups: docker
-      append: yes
+#   - name: User add docker group
+#     ansible.builtin.user:
+#      name: "{{ ansible_env.SUDO_USER }}"
+#      groups: docker
+#      append: yes

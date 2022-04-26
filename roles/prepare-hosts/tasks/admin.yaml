@@ -1,0 +1,6 @@
+---
+- name: Add ssh public key
+  authorized_key:
+   user: root
+   state: present
+   key: "{{ ssh_pub_key }}"

@@ -1,0 +1,15 @@
+---
+# ssh-copy-id
+- include_tasks: admin.yaml
+
+# Upgrade system and install additional packages
+- include_tasks: apt.yaml
+
+# Instal python3 and make alternatives
+- include_tasks: python.yaml
+
+# Disable swap
+- include_tasks: swap.yaml
+
+#Reboot nodes
+- include_tasks: reboot.yaml

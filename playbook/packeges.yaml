@@ -18,6 +18,7 @@
        - curl
        - gnupg
        - lsb-release
+       - apt-transport-https
       state: latest
    
    - name: Install latest aditional packeges
@@ -26,4 +27,7 @@
        - tree
        - net-tools
        - mc
+       - htop
+       - curl
+       - git
       state: latest

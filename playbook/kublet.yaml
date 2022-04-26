@@ -1,0 +1,45 @@
+---
+ - name: Install k8s
+   hosts: '{{ HOSTS }}'
+   become: yes
+   gather_facts: true
+  
+   import_playbook: './packeges.yaml HOSTS={{ HOSTS }}'
+
+   vars:
+    k8s_gpg: 'https://packages.cloud.google.com/apt/doc/apt-key.gpg'
+    k8s_repo: 'deb http://apt.kubernetes.io/ kubernetes-xenial main'
+
+   pre_tasks:
+
+   - name: Add k8s gpg key
+     apt_key:
+      url: '{{ k8s_gpg }}'
+      state: present
+
+   - name: Add k8s repositories
+     apt_repository:
+      repo: '{{ k8s_repo }}'
+      state: present
+
+   tasks:
+
+   - name: Install k8s
+     apt:
+      pkg:
+       - kubelet
+       - kubeadm
+       - kubectl
+      state: present
+      update_cache: yes
+      cache_valid_time: 3600
+      notify: start k8s daemon
+
+   handlers:
+   
+   - name: start k8s daemon
+     systemd:
+      name: kubelet
+      state: restarted
+      enabled: yes
+      daemon_reload: yes

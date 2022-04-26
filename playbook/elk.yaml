@@ -1,0 +1,32 @@
+---
+- name: ELK
+  become: true
+  hosts: '{{ hosts }}'
+  gather_facts: no
+
+  vars:
+   - elk_public_key: "https://artifacts.elastic.co/GPG-KEY-elasticsearch"
+   - elk_repo_url: "https://artifacts.elastic.co/packages/8.x/apt"
+
+  pre_tasks:
+   - name: Install apt-transport-https
+     apt:
+      pkg:
+       - apt-transport-https
+      state: latest
+
+   - name: ELK publick signing key
+     apt_key:
+      url: https://artifacts.elastic.co/GPG-KEY-elasticsearch
+      state: present
+
+   - name: Update apt cache
+     apt:
+      cache_update: yes
+
+  tasks:
+   - name: Install ELK
+     apt:
+      pkg:
+       - elasticsearch
+      state: present
