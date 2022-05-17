@@ -4,49 +4,28 @@ Docker-host
 Переменные
 --------------
 
-- ```default_admin_user -> str```: Пользователь, который будет назначен администратором docker и которому, будут добавлены ключи ssh. 
-  - default: ```default_admin_user = root```
+```default_admin_user -> str``` Пользователь, который будет назначен администратором docker и которому, будут добавлены ключи ssh. 
 
-ssh_pub_keys -> list: Список публичных ключей, которые будут добавленны пользователю.
-default: 
-  ssh_pub_keys = ["{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"]
 
-python2_alt_value -> str && python3_alt_value -> str: Значения для приоритета альтернативных исполняемых файлов python.
-default:
-  python2_alt_value = "10"
-  python3_alt_value = "20"
+```ssh_pub_keys -> list``` Список публичных ключей, которые будут добавленны пользователю.
 
-apt_https_install -> list: Установка пектов для работы APT через HTTPs.
-default:
-  apt_https_install = [ca-certificates, curl, gnupg, lsb-release, apt-transport-https]
+```python2_alt_value -> str && python3_alt_value -> str``` Значения для приоритета альтернативных исполняемых файлов python.
 
-apt_tools_install -> list: Установка дополнительных пакетов.
-default:
-  apt_tools_install = [tree, net-tools, mc, htop, git]
+```apt_https_install -> list``` Установка пектов для работы APT через HTTPs.
 
-apt_docker_install -> list: Устанвока пакетов Docker.
-default:
-  apt_docker_install = [docker-ce, docker-ce-cli, containerd.io, docker-compose]
+```apt_tools_install -> list``` Установка дополнительных пакетов.
 
-docker_url -> str: Ссылка на репозиторий Docker.
-default:
-  docker_url = "https://download.docker.com/linux/ubuntu"
+```apt_docker_install -> list``` Устанвока пакетов Docker.
 
-ntp_server -> str: Адрес NTP сервера.
-default:
-  ntp_server = "{{ ansible_default_ipv4.gateway }}"
+```docker_url -> str``` Ссылка на репозиторий Docker.
 
-portainer -> bool: Указывает, на необходимость установки docker portainer container.
-default:
-  portainer = undefined
+```ntp_server -> str``` Адрес NTP сервера.
 
-images -> str: Указывает, на необходимость скачать образы docker.
-default:
-  iamges = undefined
+```portainer -> bool``` Указывает, на необходимость установки docker portainer container.
 
-images_pull -> list: Список образов, которые будут скачанны.
-default:
-  images_pull = [ubuntu:latest, alpine:latest, postgres:latest, mysql:latest, nginx:latest]
+```images -> str``` ```[pull | undefinded]``` Указывает, на необходимость скачать образы docker.
+
+```images_pull -> list``` Список образов, которые будут скачанны.
 
 Зависимости
 ------------
