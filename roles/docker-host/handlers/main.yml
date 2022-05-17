@@ -1,0 +1,26 @@
+---
+- name: NTP. Config service
+  template:
+   src: "ntp.j2"
+   dest: "/etc/ntp.conf"
+   owner: root
+   group: root
+   mode: '0644'
+
+- name: NTP. Enable service
+  service:
+    name: ntp
+    state: restarted
+    enabled: yes
+
+- name: Docker. Hold version
+  dpkg_selections:
+    name: "{{ item }}"
+    selection: hold
+  loop: "{{ apt_docker_install }}"
+  
+- name: Docker. Enable service
+  service:
+    name: docker
+    state: restarted
+    enabled: yes

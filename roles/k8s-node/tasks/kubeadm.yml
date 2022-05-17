@@ -1,0 +1,31 @@
+- name: Config k8s modprobe
+  copy:
+    src: k8s_modprobe.conf
+    dest: /etc/modules-load.d/k8s.conf
+  notify: 
+    - enable modprobe
+
+- name: net.bridge.bridge-nf-call-iptables
+  copy:
+    src: k8s.conf
+    dest: /etc/sysctl.d/k8s.conf
+  notify: 
+    - enable k8s config
+
+- name: K8s gpg-key add
+  apt_key:
+    url: "{{ k8s_gpg_url }}"
+    state: present
+
+- name: K8s repository add
+  apt_repository:
+    repo: "deb {{ k8s_deb_url }}"
+    state: present
+
+- name: K8s latest version install
+  apt:
+    name: "{{ item }}"
+    state: latest
+  loop: "{{ apt_k8s_install }}"
+  notify:
+    - hold k8s version

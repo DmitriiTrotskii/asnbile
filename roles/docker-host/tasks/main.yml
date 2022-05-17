@@ -1,0 +1,5 @@
+---
+- include_tasks: access.yml
+- include_tasks: python.yml
+- include_tasks: packeges.yml
+- include_tasks: docker.yml

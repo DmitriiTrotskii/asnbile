@@ -1,0 +1,22 @@
+---
+# Default administrator
+default_admin_user: "root"
+ssh_pub_keys: ["{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"]
+
+# Alternatives values
+python2_alt_value: "10"
+python3_alt_value: "20"
+
+# Apt pacheges for install
+apt_https_install: [ca-certificates, curl, gnupg, lsb-release, apt-transport-https]
+apt_tools_install: [tree, net-tools, mc, htop, git]
+apt_docker_install: [docker-ce, docker-ce-cli, containerd.io, docker-compose]
+
+# Docker repository url
+docker_url: "https://download.docker.com/linux/ubuntu"
+
+# NTP server address
+ntp_server: "{{ ansible_default_ipv4.gateway }}"
+
+# Pull docker images
+images_pull: [ubuntu:latest, alpine:latest, postgres:latest, mysql:latest, nginx:latest]

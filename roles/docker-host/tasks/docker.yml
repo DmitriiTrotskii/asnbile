@@ -1,0 +1,73 @@
+---
+- name: Docker. Old version remove
+  apt:
+    pkg:
+      - docker
+      - docker-engine
+      - docker.io
+      - containerd
+      - runc
+    state: absent
+
+- name: Docker. GPG-key add
+  apt_key:
+    url: "{{ docker_url }}/gpg"
+    state: present
+
+- name: Docker. Repository add
+  apt_repository:
+    repo: "deb {{ docker_url }} {{ ansible_distribution_release }} stable"
+    state: present
+
+- name: Docker. Latest version install
+  apt:
+    name: "{{ item }}"
+    state: latest
+  loop: "{{ apt_docker_install }}"
+  notify:
+    - Docker. Hold version
+    - Docker. Enable service
+
+- name: Docker. Add user "{{ default_admin_user }}" to docker group
+  user:
+    name: "{{ default_admin_user }}"
+    groups: docker
+    append: yes
+  when:
+    - default_admin_user != "root"
+
+- name: Local exec. Add ansible.community.docker
+  delegate_to: localhost
+  connection: local
+  become: false
+  run_once: true
+  shell: ansible-galaxy collection install community.docker
+  when: (portainer is defined and portainer | bool) or (images is defined and images == "pull")
+
+- name: Docker. Pull images
+  docker_image:
+    name: "{{ item }}"
+    source: pull
+  loop: "{{ images_pull }}"
+
+  when: 
+    - images is defined
+    - images == "pull"
+
+- name: Docker. Install portainer
+  community.docker.docker_container:
+    name: portainer
+    image: portainer/portainer-ce
+    ports:
+      - "8000:8000"
+      - "9000:9000"
+      - "9443:9443"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+      - "portainer_data:/data"
+    state: started
+    restart_policy: always
+
+  when: 
+    - portainer is defined
+    - portainer | bool

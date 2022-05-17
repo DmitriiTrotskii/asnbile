@@ -1,0 +1,9 @@
+---
+- name: Prepare k8s node
+  hosts: "{{ HOSTS }}"
+  gather_facts: true
+  become: yes
+
+  roles:
+    - docker-host
+    - k8s-node

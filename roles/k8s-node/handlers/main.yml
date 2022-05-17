@@ -1,0 +1,32 @@
+---
+# handlers file for server
+
+- name: enable modprobe
+  shell: "{{ item }}"
+  loop:
+    - modprobe br_netfilter
+    - modprobe overlay
+
+- name: enable k8s config
+  shell: sysctl --system
+
+- name: hold k8s version
+  dpkg_selections:
+    name: "{{ item }}"
+    selection: hold
+  loop: "{{ apt_k8s_install }}"
+
+- name: CRI. Enable cri-docker.socket
+  shell: "systemctl enable cri-docker.socket"
+
+- name: CRI. Enable cri-docker.service
+  shell: "systemctl enable cri-docker.service"
+
+- name: CRI. Daemon-reload
+  shell: "systemctl daemon-reload"
+
+- name: Docker. Reload service
+  service:
+    name: docker
+    state: restarted
+    enabled: yes

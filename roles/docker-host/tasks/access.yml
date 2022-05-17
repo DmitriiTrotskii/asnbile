@@ -1,0 +1,28 @@
+---
+- block:
+
+  - name: Greate new user "{{ default_admin_user }}"
+    user:
+      name: "{{ default_admin_user }}"
+      comment: Ansible administrator
+      state: present
+      group: "{{ default_admin_user }}"
+      password_lock: yes
+
+  - name: Nopasswd for "{{ default_admin_user }}"
+    template:
+      src: nopasswd.j2
+      dest: "/ets/sudoers.d/{{ default_admin_user }}"
+      owner: root
+      group: root
+      mode: '640'
+
+  when:
+    - default_admin_user != "root"
+    
+- name: Add ssh public keys for "{{ default_admin_user }}" user
+  authorized_key:
+   user: "{{ default_admin_user }}"
+   state: present
+   key: "{{ item }}"
+  loop: "{{ ssh_pub_keys }}"

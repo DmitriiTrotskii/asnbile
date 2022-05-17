@@ -1,0 +1,67 @@
+---
+
+- name: Check cri-docker binares
+  stat:
+   path: /usr/bin/cri-dockerd
+  register: docker_daemon
+
+- name: Check docker.service binares
+  stat:
+   path: /etc/systemd/system/cri-docker.service
+  register: docker_service
+
+- name: Check docker.socket binares
+  stat:
+   path: /etc/systemd/system/cri-docker.socket
+  register: docker_socket
+
+- name: Download cri-docker binares
+  unarchive:
+    src: "https://github.com/Mirantis/cri-dockerd/releases/download/{{ cri_ver }}/cri-dockerd-{{ cri_ver }}-linux-amd64.tar.gz"
+    dest: /usr/bin/cri-dockerd
+    remote_src: yes
+    owner: root
+    group: root
+    mode: "0744"
+
+  notify: 
+    - CRI. Daemon-reload
+  
+  when:
+    - not docker_daemon.stat.exists
+
+- name: Download cri-docker.service
+  get_url:
+    url: https://raw.githubusercontent.com/Mirantis/cri-dockerd/master/packaging/systemd/cri-docker.service
+    dest: /etc/systemd/system/cri-docker.service
+    owner: root
+    group: root
+    mode: "0644"
+
+  notify: 
+    - CRI. Enable cri-docker.service
+  
+  when:
+    - not docker_service.stat.exists
+
+- name: Download cri-docker.socket
+  get_url: 
+    url: https://raw.githubusercontent.com/Mirantis/cri-dockerd/master/packaging/systemd/cri-docker.socket
+    dest: /etc/systemd/system/cri-docker.socket
+    owner: root
+    group: root
+    mode: "0644"
+  
+  notify: 
+    - CRI. Enable cri-docker.socket
+
+  when:
+    - not docker_socket.stat.exists
+
+- name: Docker. Config
+  copy:
+    src: docker.json
+    dest: /etc/docker/daemon.json
+    
+  notify: 
+    - Docker. Reload service

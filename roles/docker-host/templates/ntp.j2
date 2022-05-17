@@ -1,0 +1,7 @@
+#   This file is auto configurated via ansible. 
+#   Any documents can be deleted when ansible connected.
+
+driftfile /var/lib/ntp/ntp.drift
+logfile /var/log/ntp.log
+
+server {{ ntp_server }}

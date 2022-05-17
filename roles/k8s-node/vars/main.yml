@@ -1,0 +1,8 @@
+---
+mirantis_url: "https://raw.githubusercontent.com/Mirantis/cri-dockerd/master/packaging/systemd/"
+cri_ver: "v0.2.0"
+
+k8s_gpg_url: "https://packages.cloud.google.com/apt/doc/apt-key.gpg"
+k8s_deb_url: "https://apt.kubernetes.io/ kubernetes-xenial main"
+
+apt_k8s_install: [kubelet, kubeadm, kubectl]
