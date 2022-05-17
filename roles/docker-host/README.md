@@ -57,7 +57,7 @@ default:
 
 Пример Playbook
 ----------------
-'''
+```
   - name: Prepare docker server
     hosts: "{{ HOSTS }}"
     gather_facts: true
@@ -65,4 +65,4 @@ default:
 
     roles:
       - dkr
- '''
+```
