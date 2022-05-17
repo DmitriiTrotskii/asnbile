@@ -6,16 +6,15 @@ Docker-host
 
 ```default_admin_user -> str``` Пользователь, который будет назначен администратором docker и которому, будут добавлены ключи ssh. 
 
-
 ```ssh_pub_keys -> list``` Список публичных ключей, которые будут добавленны пользователю.
 
 ```python2_alt_value -> str && python3_alt_value -> str``` Значения для приоритета альтернативных исполняемых файлов python.
 
-```apt_https_install -> list``` Установка пектов для работы APT через HTTPs.
+```apt_https_install -> list``` Список пектов для работы APT через HTTPs.
 
-```apt_tools_install -> list``` Установка дополнительных пакетов.
+```apt_tools_install -> list``` Список дополнительных пакетов.
 
-```apt_docker_install -> list``` Устанвока пакетов Docker.
+```apt_docker_install -> list``` Сисок пакетов Docker.
 
 ```docker_url -> str``` Ссылка на репозиторий Docker.
 
