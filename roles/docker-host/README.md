@@ -41,5 +41,5 @@ Docker-host
     become: yes
 
     roles:
-      - dkr
+      - docker-host
 ```
