@@ -7,7 +7,6 @@
 - name: APT. update && dist-upgrade 
   apt:
     upgrade: dist
-    update_cache: yes
 
 - name: APT. Install packages to allow apt to use a repository over HTTPs
   apt:
