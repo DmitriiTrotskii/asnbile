@@ -57,7 +57,7 @@ default:
 
 Пример Playbook
 ----------------
-```
+```yaml
   - name: Prepare docker server
     hosts: "{{ HOSTS }}"
     gather_facts: true
