@@ -4,8 +4,8 @@
 - name: enable modprobe
   shell: "{{ item }}"
   loop:
-    - modprobe br_netfilter
-    - modprobe overlay
+    - "modprobe br_netfilter"
+    - "modprobe overlay"
 
 - name: enable k8s config
   shell: sysctl --system
