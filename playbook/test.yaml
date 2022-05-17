@@ -1,11 +1,11 @@
 ---
-- name: test reboot
+- name: test
   become: true
   hosts: '{{ HOSTS }}'
   gather_facts: no
 
+  pre_tasks:
+
   tasks:
-   - name: Reboot nodes
-     reboot:
-      reboot_timeout: 300
-      msg: "Reboot initiated by Ansible"
+
+  post_tasks:

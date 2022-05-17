@@ -1,8 +1,0 @@
-[self]
-localhost ansible_host=127.0.0.1 ansible_connection=local
-
-[hosts]
-host-one ansible_host=IP
-
-[all:vars]
-user=ansible

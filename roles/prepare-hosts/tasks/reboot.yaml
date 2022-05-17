@@ -1,4 +1,0 @@
-- name: Reboot nodes
-  reboot:
-   reboot_timeout: 300
-   msg: "Reboot initiated by Ansible"

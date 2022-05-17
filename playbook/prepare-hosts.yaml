@@ -1,8 +1,0 @@
----
- - name: Prepare hosts
-   hosts: "{{ HOSTS }}"
-   gather_facts: true
-   become: yes
-
-   roles:
-    - prepare-hosts
