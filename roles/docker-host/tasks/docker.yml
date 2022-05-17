@@ -45,7 +45,7 @@
   when: (portainer is defined and portainer | bool) or (images is defined and images == "pull")
 
 - name: Docker. Pull images
-  docker_image:
+  community.docker.docker_image:
     name: "{{ item }}"
     source: pull
   loop: "{{ images_pull }}"
