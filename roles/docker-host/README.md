@@ -4,9 +4,9 @@ Docker-host
 Переменные
 --------------
 
-default_admin_user -> str: Пользователь, который будет назначен администратором docker и которому, будут добавлены ключи ssh. 
-default: 
-  default_admin_user = root
+- ``` default_admin_user -> str```: Пользователь, который будет назначен администратором docker и которому, будут добавлены ключи ssh. 
+  - default: 
+    default_admin_user = root
 
 ssh_pub_keys -> list: Список публичных ключей, которые будут добавленны пользователю.
 default: 
