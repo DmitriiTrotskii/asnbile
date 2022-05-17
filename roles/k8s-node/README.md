@@ -34,7 +34,7 @@ default:
 
 Пример Playbook
 ----------------
-
+```yaml
   - name: Prepare k8s node
     hosts: "{{ HOSTS }}"
     gather_facts: true
@@ -43,3 +43,4 @@ default:
     roles:
       - docker-host
       - k8s-node
+```
