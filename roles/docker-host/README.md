@@ -102,3 +102,15 @@ ansible-galaxy collection install community.docker
     roles:
       - docker-host
 ```
+Запуск playbook:
+```shell
+ansible-playbook docker-host.yaml -e "HOSTS=docker"
+```
+Дополнительно запустить portainer:
+```shell
+ansible-playbook docker-host.yaml -e "HOSTS=docker" -e "portainer=yes"
+```
+Дополнительно сказать образы:
+```shell
+ansible-playbook docker-host.yaml -e "HOSTS=docker" -e "images=pull"
+```
