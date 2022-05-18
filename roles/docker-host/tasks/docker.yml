@@ -36,14 +36,6 @@
   when:
     - default_admin_user != "root"
 
-- name: Local exec. Add ansible.community.docker
-  delegate_to: localhost
-  connection: local
-  become: false
-  run_once: true
-  shell: ansible-galaxy collection install community.docker
-  when: (portainer is defined and portainer | bool) or (images is defined and images == "pull")
-
 - name: Docker. Pull images
   community.docker.docker_image:
     name: "{{ item }}"
