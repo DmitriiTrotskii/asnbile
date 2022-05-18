@@ -7,7 +7,7 @@ Docker-host
 - Установка дополнительных пакетов (полный список: ```apt_tools_install```)
   - apt over https, ntp
 - Установка python3, и  настройка alternatives в случае присуствия python2
-- Установка полседней версии docker (полный список: ```apt_docker_install```)
+- Установка последней версии docker (полный список: ```apt_docker_install```)
 - Запуск portainer, в случае необходимости
 - Pull docker images, в случае необходимости
 
