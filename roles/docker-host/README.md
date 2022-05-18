@@ -1,36 +1,95 @@
 Docker-host
 =========
 
+Описание
+--------------
+
+- Установка дополнительных пакетов (полный список: ```apt_tools_install```)
+  - apt over https, ntp
+- Установка python3, и  настройка alternatives в случае присуствия python2
+- Установка полседней версии docker (полный список: ```apt_docker_install```)
+- Запуск portainer, в случае необходимости
+- Pull docker images, в случае необходимости
+
 Переменные
 --------------
 
-```default_admin_user -> str``` Пользователь, который будет назначен администратором docker и которому, будут добавлены ключи ssh. 
+```default_admin_user -> str```
 
-```ssh_pub_keys -> list``` Список публичных ключей, которые будут добавленны пользователю.
+Пользователь, который будет назначен администратором. Этому пользователю, так же, будут добавлены ключи ssh. 
 
-```python2_alt_value -> str && python3_alt_value -> str``` Значения для приоритета альтернативных исполняемых файлов python.
+---
 
-```apt_https_install -> list``` Список пектов для работы APT через HTTPs.
+```ssh_pub_keys -> list``` 
 
-```apt_tools_install -> list``` Список дополнительных пакетов.
+Список публичных ключей, которые будут добавленны пользователю.
 
-```apt_docker_install -> list``` Сисок пакетов Docker.
+---
 
-```docker_url -> str``` Ссылка на репозиторий Docker.
+```python2_alt_value -> str && python3_alt_value -> str```
 
-```ntp_server -> str``` Адрес NTP сервера.
+Значения для приоритета альтернативных исполняемых файлов python.
 
-```portainer -> bool``` Указывает, на необходимость установки docker portainer container.
+---
 
-```images -> str``` ```[pull | undefinded]``` Указывает, на необходимость скачать образы docker.
+```apt_https_install -> list```
 
-```images_pull -> list``` Список образов, которые будут скачанны.
+Список пектов для работы APT через HTTPs.
+
+---
+
+```apt_tools_install -> list```
+
+Список дополнительных пакетов.
+
+---
+
+```apt_docker_install -> list```
+
+Сисок пакетов Docker.
+
+---
+
+```docker_url -> str```
+
+Ссылка на репозиторий Docker.
+
+---
+
+```ntp_server -> str```
+
+Адрес NTP сервера.
+
+---
+
+```portainer -> bool```
+
+Указывает, на необходимость установки docker portainer container.
+
+---
+
+```images -> str``` ```[pull | undefinded]```
+
+Указывает, на необходимость скачать образы docker.
+
+---
+
+```images_pull -> list```
+
+Список образов, которые будут скачанны.
+
+---
 
 Зависимости
 ------------
 
-Для развертывания portainer в процессе установки необхоим модуль community.docker.
-Будет установлен автоматически на хосте с которого запускается ansible.
+Необходим модуль community.docker
+
+Для установки:
+
+```shell
+ansible-galaxy collection install community.docker
+```
 
 Пример Playbook
 ----------------
