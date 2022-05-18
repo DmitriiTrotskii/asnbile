@@ -110,7 +110,7 @@ ansible-playbook docker-host.yaml -e "HOSTS=docker"
 ```shell
 ansible-playbook docker-host.yaml -e "HOSTS=docker" -e "portainer=yes"
 ```
-Дополнительно сказать образы:
+Дополнительно скачать образы:
 ```shell
 ansible-playbook docker-host.yaml -e "HOSTS=docker" -e "images=pull"
 ```
